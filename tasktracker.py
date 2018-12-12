@@ -1,11 +1,11 @@
-import sqlite as db
+import sqlite3 as db
 
 
 class TaskTracker:
     def __init__(self):
         self.new_tasks = []
         self.in_progress_tasks = []
-        self.completed_task = []
+        self.completed_tasks = []
 
     def add(self, user_token):
         task = Task(user_token)
@@ -17,8 +17,10 @@ class TaskTracker:
         if task:
             self.in_progress_tasks.append(task)
 
-    def mark_accomplishment(self):
-        pass
+    def mark_accomplishment(self, user_token):
+        task = Task(user_token)
+        if task:
+            self.completed_tasks.append(task)
 
     def check_status(self):
         pass
@@ -54,7 +56,7 @@ class Task:
 
 
 def create_database():
-    c = db.connect(datebase="tasksandusers")
+    c = db.connect("tasksandusers")
     cu = c.cursor()
     try:
         cu.execute("""
@@ -69,5 +71,5 @@ def create_database():
     c.close()
 
 
-
+create_database()
 
